@@ -1,9 +1,36 @@
 <link rel="stylesheet" href="{{ 'component-list-menu.css' | asset_url }}" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{ 'component-search.css' | asset_url }}" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{ 'component-menu-drawer.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'header.css' | asset_url }}">
 <link
   rel="stylesheet"
   href="{{ 'component-cart-notification.css' | asset_url }}"
   media="print"
   onload="this.media='all'"
 >
+
+<header class="header">
+  <a href="#" class="logo">
+    <img src="{{ 'logo.svg' | asset_url }}" alt="logo">
+  </a>
+
+  <div class="menu">
+    <a href="./home">Home</a>
+    <a href="./home">About</a>
+    <a href="./home">Practice Areas</a>
+    <a href="./home">FAQs</a>
+    <a href="./home">Contact</a>
+
+    <button class="menu_close"><img src="{{ 'close.svg' | asset_url }}"></button>
+  </div>
+
+
+  <div class="btns">
+    <a href="/" class="btn__primary">(518) 452-6979</a>
+    <a href="/" class="btn__secondary">Clio for Clients</a>
+  </div>
+
+  <button class="menu_open"><img src="{{ 'open.svg' | asset_url }}"></button>
+</header>
+
+<script src="{{ 'header.js' | asset_url }}" defer></script>
