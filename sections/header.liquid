@@ -9,28 +9,34 @@
   onload="this.media='all'"
 >
 
-<header class="header">
-  <a href="#" class="logo">
-    <img src="{{ 'logo.svg' | asset_url }}" alt="logo">
-  </a>
+<header class="custome_header">
+    <div class="custome_header__container">
+      <a href="/" class="custome_header__logo">
+        <img src="{{ 'logo.svg' | asset_url }}" alt="logo">
+      </a>
 
-  <div class="menu">
-    <a href="./home">Home</a>
-    <a href="./home">About</a>
-    <a href="./home">Practice Areas</a>
-    <a href="./home">FAQs</a>
-    <a href="./home">Contact</a>
-
-    <button class="menu_close"><img src="{{ 'close.svg' | asset_url }}"></button>
-  </div>
+      <nav class="custome_header__menu">
+        <a href="./" class="active">Home</a>
+        <a href="./">About</a>
+        <a href="./">Practice Areas</a>
+        <a href="./">FAQs</a>
+        <a href="./">Contact</a>
 
 
-  <div class="btns">
-    <a href="/" class="btn__primary">(518) 452-6979</a>
-    <a href="/" class="btn__secondary">Clio for Clients</a>
-  </div>
+        <button class="custome_header__menu-close">
+          <img src="{{ 'close.svg' | asset_url }}" alt="close menu">
+        </button>
+      </nav>
 
-  <button class="menu_open"><img src="{{ 'open.svg' | asset_url }}"></button>
-</header>
+      <div class="custome_header__actions">
+        <a href="#" class="btn btn--primary">(518) 452-6979</a>
+        <a href="#" class=" btn btn--secondary">Clio for Clients</a>
+      </div>
+
+      <button class="custome_header__menu-open">
+        <img src="{{ 'open.svg' | asset_url }}" alt="open menu">
+      </button>
+    </div>
+  </header>
 
 <script src="{{ 'header.js' | asset_url }}" defer></script>

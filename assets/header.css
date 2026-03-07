@@ -1,131 +1,172 @@
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.custome_header {
   padding-top: 71px;
-  max-width: 1566px;
-  margin-inline: auto;
-
-  a {
-    text-decoration: none;
-  }
 }
 
-.logo {
+.custome_header__container {
+  width: 100%;
+  max-width: 1574px;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-inline: 67px;
+  margin-inline: auto;
+}
+
+.custome_header__logo {
   width: 100%;
   max-width: 209px;
 }
 
-.menu {
+
+.custome_header__menu {
   display: flex;
   align-items: center;
   gap: 57px;
+  text-transform: capitalize;
 
   a {
     color: #292C3D;
+    text-decoration: none;
+
+    &.active {
+      color: #A3934E;
+      font-weight: 700;
+    }
   }
+
 }
 
-.btns {
-  display: flex;
-  align-items: center;
-  gap: 22px;
-
-  a {
-    padding: 13px 33px;
-    color: #fff;
-    border-radius: 40px;
-    font-weight: 700;
-  }
-}
-
-.btn__primary {
- background: #292C3D;
-}
-
-.btn__secondary {
-  background: #A3934E;
-}
-
-.menu_close, .menu_open {
-  display: none;
-  position: absolute;
-}
-
-.menu_open{
-  right: 0;
-  top: 20px;
-}
-
-.menu_close {
-  right: 20px;
-  top: 20px;
-}
-
-.menu_open, .menu_close {
+.custome_header__menu-close, .custome_header__menu-open {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 10px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+
+  img {
+    width: 24px;
+    height: 24px;
+  }
+
+  &:hover {
+    transform: scale(1.1);
+  }
 }
 
-.menu_open img, .menu_close img {
-  width: 24px;
-  height: 24px;
+.custome_header__actions {
+  display: flex;
+  align-items: center;
+  gap: 22px;
 }
 
-@media (max-width: 1024px) {
+.custome_header__menu-open {
+  display: none;
+}
 
-  .header {
-    padding-block: 20px;
-    padding-right: 30px;
-    position: relative;
-  }
+.custome_header__menu-close {
+  display: none;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
 
-  .menu {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background-color: #fff;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    transform: translateX(-100%);
-    transition: transform 0.3s ease-in-out;
-    z-index: 1;
-    gap: 20px;
-  }
+.custome_header__menu.active ~ .custome_header__menu-close {
+  display: flex;
+}
 
-  .menu.open {
-    transform: translateX(0);
-  }
+.btn {
+  text-decoration: none;
+  padding: 13px 33px;
+  font-weight: 700;
+  color: #fff;
+  border-radius: 40px;
+}
 
-  .menu_close,.menu_open {
-    display: block;
-  }
+.btn--primary {
+  background-color: #292C3D;
+}
 
-  .logo {
+.btn--secondary {
+  background-color: #A3934E;
+}
+
+@media (max-width: 1224px) {
+  .custome_header__logo {
     max-width: 100px;
+
     img {
       width: 100px;
     }
   }
 
-  .btns {
-    margin-right: 20px;
-    gap: 12px;
+  .custome_header__list {
+    gap: 30px;
+  }
+}
 
-    a {
-      padding: 10px 16px;
-      font-size: 12px;
-      max-width: max-content;
+
+@media (max-width: 1024px) {
+  .custome_header {
+    padding-top: 20px;
+  }
+
+  .custome_header__container {
+    position: relative;
+    max-width: 100%;
+    padding-right: 40px;
+    padding-left: 20px;
+  }
+
+  .btn--secondary {
+    font-size: 12px;
+    padding: 10px;
+  }
+
+  .custome_header__menu-open {
+    display: flex;
+    position: absolute;
+    right: 10px;
+    top: 4px;
+  }
+
+  .custome_header__menu {
+    flex-direction: column;
+    justify-content: flex-start;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    padding-top: 80px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    background: #fff;
+    z-index: 3;
+
+    &.active {
+      transform: translateX(0);
     }
   }
 
-  .btn__primary {
+  .custome_header__list {
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .custome_header__menu-close {
+    display: flex;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+  }
+
+  .btn--primary {
     display: none;
   }
+
 }
