@@ -1,42 +1,235 @@
-<link rel="stylesheet" href="{{ 'component-list-menu.css' | asset_url }}" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="{{ 'component-search.css' | asset_url }}" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="{{ 'component-menu-drawer.css' | asset_url }}" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{ 'header.css' | asset_url }}">
-<link
-  rel="stylesheet"
-  href="{{ 'component-cart-notification.css' | asset_url }}"
-  media="print"
-  onload="this.media='all'"
->
 
-<header class="custome_header">
-    <div class="custome_header__container">
-      <a href="/" class="custome_header__logo">
-        <img src="{{ 'logo.svg' | asset_url }}" alt="logo">
+{% style %}
+  #custome__header-{{ section.id }} {
+    --padding-top: {{ section.settings.header_padding_top }}px;
+    --padding-bottom: {{ section.settings.header_padding_bottom }}px;
+    --padding-right: {{ section.settings.header_padding_right }}px;
+    --padding-left: {{ section.settings.header_padding_left }}px;
+    --padding-top-mlb: {{ section.settings.padding_top_mbl }}px;
+    --padding-bottom-mbl: {{ section.settings.padding_bottom_mbl }}px;
+    --padding-right: {{ section.settings.padding_right_mbl }}px;
+    --padding-left-mbl: {{ section.settings.padding_left_mbl }}px;
+  }
+{% endstyle %}
+
+{% stylesheet %}
+  .custome_header{
+    padding-top: var(--padding-top);
+    padding-bottom: var(--padding-bottom);
+    padding-right: var(--padding-right);
+    padding-left: var(--padding-left);
+  }
+
+  @media (max-width: 1024px) {
+    .custome_header {
+      padding-top: var(--padding-top-mlb);
+      padding-bottom: var(--padding-bottom-mbl);
+      padding-right: var(--padding-right-mbl);
+      padding-left: var(--padding-left-mbl);
+    }
+
+    .custome_header__container {
+      padding-right: var(--padding-right);
+    }
+  }
+{% endstylesheet %}
+
+<div id="custome__header-{{ section.id }}" class="custome_header">
+  <div class="custome_header__container">
+
+    {% if settings.logo %}
+      <a href="{{ routes.root_url }}" class="custome_header__logo">
+        <img src="{{ settings.logo | image_url }}" alt="logo">
       </a>
+    {% else %}
+      <a href="{{ routes.root_url }}" class="custome_header__logo">
+        <img src="{{ section.settings.header_logo | image_url }}" alt="logo">
+      </a>
+    {% endif %}
 
-      <nav class="custome_header__menu">
-        <a href="./" class="active">Home</a>
-        <a href="./">About</a>
-        <a href="./">Practice Areas</a>
-        <a href="./">FAQs</a>
-        <a href="./">Contact</a>
+    <nav class="custome_header__menu">
+      {% assign menu = linklists[section.settings.main_menu] %}
+      {% if menu %}
+        {% for link in menu.links %}
+          <a href="{{ link.url }}" class="{% if link.active %}active{% endif %}">
+            {{ link.title }}
+          </a>
+        {% endfor %}
+      {% endif %}
 
-
-        <button class="custome_header__menu-close">
-          <img src="{{ 'close.svg' | asset_url }}" alt="close menu">
-        </button>
-      </nav>
-
-      <div class="custome_header__actions">
-        <a href="#" class="btn btn--primary">(518) 452-6979</a>
-        <a href="#" class=" btn btn--secondary">Clio for Clients</a>
-      </div>
-
-      <button class="custome_header__menu-open">
-        <img src="{{ 'open.svg' | asset_url }}" alt="open menu">
+      <button class="custome_header__menu-close">
+        <img src="{{ 'close.svg' | asset_url }}" alt="close menu">
       </button>
+    </nav>
+
+    <div class="custome_header__actions">
+      <a href="{{ section.settings.phone_link }}" class="btn btn--primary">
+        {{ section.settings.phone_text }}
+      </a>
+      <a href="{{ section.settings.client_link }}" class="btn btn--secondary">
+        {{ section.settings.client_text }}
+      </a>
     </div>
-  </header>
+
+    <button class="custome_header__menu-open">
+      <img src="{{ 'open.svg' | asset_url }}" alt="open menu">
+    </button>
+
+  </div>
+</div>
 
 <script src="{{ 'header.js' | asset_url }}" defer></script>
+
+{% schema %}
+ {
+  "name": "Custome Header",
+  "tag": "header",
+
+  "disabled_on": {
+    "groups": ["footer", "aside"]
+  },
+
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "header_logo",
+      "label": "Header Logo",
+      "info": "Used if theme logo is not set"
+    },
+    {
+      "type": "link_list",
+      "id": "main_menu",
+      "label": "Main Menu",
+      "default": "main-menu"
+    },
+
+    {
+      "type": "header",
+      "content": "Primary Button"
+    },
+    {
+      "type": "text",
+      "id": "phone_text",
+      "label": "Phone Button Text",
+      "default": "(518) 452-6979"
+    },
+    {
+      "type": "text",
+      "id": "phone_link",
+      "label": "Phone Button Link",
+      "default": "tel:5184526979"
+    },
+
+    {
+      "type": "header",
+      "content": "Secondary Button"
+    },
+    {
+      "type": "text",
+      "id": "client_text",
+      "label": "Client Button Text",
+      "default": "Clio for Clients"
+    },
+    {
+      "type": "url",
+      "id": "client_link",
+      "label": "Client Button Link"
+    },
+
+    {
+      "type": "header",
+      "content": "Settings"
+    },
+    {
+      "type": "range",
+      "id": "header_padding_top",
+      "label": "Space Above",
+      "min": 0,
+      "max": 200,
+      "unit": "px",
+      "step": 10,
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "header_padding_bottom",
+      "label": "Space Below",
+      "min": 0,
+      "max": 200,
+      "unit": "px",
+      "step": 10,
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "header_padding_right",
+      "label": "Space Right",
+      "min": 0,
+      "max": 200,
+      "unit": "px",
+      "step": 10,
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "header_padding_left",
+      "label": "Space Left",
+      "min": 0,
+      "max": 200,
+      "unit": "px",
+      "step": 10,
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Mobile Settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mbl",
+      "label": "Space Above",
+      "min": 0,
+      "max": 200,
+      "unit": "px",
+      "step": 10,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mbl",
+      "label": "Space Below",
+      "min": 0,
+      "max": 200,
+      "unit": "px",
+      "step": 10,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_right_mbl",
+      "label": "Space Right",
+      "min": 0,
+      "max": 200,
+      "unit": "px",
+      "step": 10,
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "padding_left_mbl",
+      "label": "Space Left",
+      "min": 0,
+      "max": 200,
+      "unit": "px",
+      "step": 10,
+      "default": 10
+    },
+  ],
+  "presets": [
+    {
+      "name": "Custom Header"
+    }
+  ]
+}
+{% endschema %}
