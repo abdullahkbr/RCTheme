@@ -47,15 +47,19 @@
 
 
     <div class="custome_header__actions">
-      {% if section.settings.primary_link != blank %}
-      <a href="{{ section.settings.btn_primary}}" class="btn btn--primary">
-        {{ section.settings.btn_primary_text }}
-      </a>
+      {% assign primary_text = section.settings.btn_primary_text | strip %}
+      {% assign primary_link = section.settings.primary_link | strip %}
+      {% if primary_text != blank and primary_link != blank %}
+        <a href="{{ primary_link }}" class="btn btn--primary">
+          {{ primary_text }}
+        </a>
       {% endif %}
 
-      {% if section.settings.secondary_link != blank %}
-      <a href="{{ section.settings.secondary_link}}" class="btn btn--secondary">
-        {{ section.settings.secondary_text }}
+      {% assign secondary_link = section.settings.secondary_link | strip %}
+      {% assign secondary_text = section.settings.secondary_text | strip %}
+      {% if secondary_link != blank %}
+      <a href="{{secondary_link}}" class="btn btn--secondary">
+        {{secondary_text}}
       </a>
       {% endif %}
     </div>
