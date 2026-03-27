@@ -1,16 +1,40 @@
 <link rel="stylesheet" href="{{ 'custom_hero.css' | asset_url }}">
-<div class="custom_hero">
+
+<style>
+  #hero-{{ section.id }} {
+    --padding-tp: {{ section.settings.padding-tp }}px;
+    --padding-bt: {{ section.settings.padding-bt }}px;
+    --padding-left: {{ section.settings.padding-left }}px;
+    --padding-right: {{ section.settings.padding-right }}px;
+  }
+
+  .hero {
+    {% if section.settings.is_bg%}
+
+      {%- assign opacity = section.settings.overlay_opacity | divided_by: 100.0 -%}
+      {%- assign overlay_rgba = section.settings.overlay_color | color_modify: 'alpha', opacity -%}
+
+      background-image: linear-gradient({{ overlay_rgba }}, {{ overlay_rgba }}), url('{{ section.settings.bg_image | img_url: 'master' }}');
+      background-color: transparent;
+    {% else %}
+      background-image: none;
+      background-color: {{ section.settings.bg_color }};
+    {% endif %}
+  }
+</style>
+
+<div id="hero-{{ section.id }}" class="hero__container">
   {% for block in section.blocks %}
     {% case block.type %}
       {% when 'heading' %}
-        <h1 class="custom_hero_heading">{{ block.settings.heading_text }}</h1>
+        <h1 class="hero_heading">{{ block.settings.heading_text }}</h1>
       {% when 'text' %}
-        <p class="custom_hero_text">{{ block.settings.text_content }}</p>
+        <p class="hero__description">{{ block.settings.text_content }}</p>
       {% when 'link' %}
         {% assign link_text = block.settings.link_text | strip %}
         {% assign link_url = block.settings.link_url %}
         {% if link_url != blank and link_text != blank %}
-          <a href="{{ block.settings.link_url }}" class="custom_hero_link">
+          <a href="{{ block.settings.link_url }}" class="btn">
             {{ link_text }}
           </a>
         {% endif %} 
@@ -19,13 +43,121 @@
   {% endfor %}
 </div>
 
+{% stylesheet %}
+  .hero {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .hero__container {
+    padding-top: var(--padding-tp);
+    padding-bottom: var(--padding-bt);
+    padding-left: var(--padding-left);
+    padding-right: var(--padding-right);
+  }
+
+  .hero_heading {
+    font-size:40px;
+    font-weight: 700;
+  }
+{% endstylesheet %}
 {% schema %}
 {
   "name": "Custom Hero",
   "tag": "section",
+  "class": "hero",
   "disabled_on": {
     "groups": ["header", "footer"]
   },
+
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "is_bg",
+      "label": "Use Background Image",
+      "info": "Check this to use an image. Uncheck to use a solid color.",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Image",
+      "visible_if": "{{ section.settings.is_bg }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Section Background Image",
+      "visible_if": "{{ section.settings.is_bg }}"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay Color",
+      "default": "#000000",
+      "visible_if": "{{ section.settings.is_bg }}"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding-tp",
+      "label": "Space Above",
+      "min": 0,
+      "max": 200,
+      "unit": "px",
+      "step": 10,
+      "default": 100,
+    },
+    {
+      "type": "range",
+      "id": "padding-bt",
+      "label": "Space Below",
+      "min": 0,
+      "max": 200,
+      "unit": "px",
+      "step": 10,
+      "default": 100,
+    },
+    {
+      "type": "range",
+      "id": "padding-left",
+      "label": "Space Left",
+      "min": 0,
+      "max": 200,
+      "unit": "px",
+      "step": 10,
+      "default": 0,
+    },
+    {
+      "type": "range",
+      "id": "padding-right",
+      "label": "Space Right",
+      "min": 0,
+      "max": 200,
+      "unit": "px",
+      "step": 10,
+      "default": 0,
+    },
+  ],
 
   "blocks": [
     {

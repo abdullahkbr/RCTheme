@@ -1,3 +1,50 @@
+.hero__container {
+  max-width: 920px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.hero__description {
+  color: #000;
+  font-size: 16px;
+  font-weight: 300;
+  margin-block: 27px 86px;
+}
+
+.hero .btn {
+  font-size: 16px;
+  width: 100%;
+  max-width: max-content;
+  margin-inline: auto;
+  padding: 22px 43px;
+  font-weight: 400;
+  background: #000;
+  color: #fff;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background: #fff;
+    color: #000;
+  }
+
+}
+
+ @media (max-width: 768px) {
+    .hero {
+      padding-block: 40px;
+    }
+
+    .her__description {
+      font-size: 12px;
+      margin-block: 16px;
+    }
+
+    .btn {
+      font-size: 12px;
+      padding: 12px 20px;
+    }
+  }
+
 .custom_hero {
   width: 100%;
   max-width: 880px;
