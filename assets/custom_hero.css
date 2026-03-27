@@ -1,14 +1,10 @@
 .hero__container {
-  max-width: 920px;
-  margin-inline: auto;
-  text-align: center;
+  width: 100%;
 }
 
 .hero__description {
-  color: #000;
   font-size: 16px;
   font-weight: 300;
-  margin-block: 27px 86px;
 }
 
 .hero .btn {
@@ -18,8 +14,6 @@
   margin-inline: auto;
   padding: 22px 43px;
   font-weight: 400;
-  background: #000;
-  color: #fff;
   transition: background-color 0.3s ease;
 
   &:hover {
@@ -36,7 +30,6 @@
 
     .her__description {
       font-size: 12px;
-      margin-block: 16px;
     }
 
     .btn {

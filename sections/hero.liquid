@@ -6,6 +6,14 @@
     --padding-bt: {{ section.settings.padding-bt }}px;
     --padding-left: {{ section.settings.padding-left }}px;
     --padding-right: {{ section.settings.padding-right }}px;
+    --title-space-below: {{ section.settings.title_space_below }}px;
+    --text-space-below: {{ section.settings.text_space_below }}px;
+    --container-width: {{ section.settings.container_width }}px;
+    --text-align: {{ section.settings.text_align }};
+    --title-color: {{ section.settings.title_color }};
+    --text-color: {{ section.settings.text_color }};
+    --btn-bg-color: {{ section.settings.btn_bg_color }};
+    --btn-text-color: {{ section.settings.btn_text_color }}
   }
 
   .hero {
@@ -19,6 +27,14 @@
     {% else %}
       background-image: none;
       background-color: {{ section.settings.bg_color }};
+    {% endif %}
+  }
+
+  .hero__container {
+    {% if section.settings.alignment == 'left' %}
+      margin-left: {{ section.settings.alignment }};
+    {% else %}
+      margin-inline: {{ section.settings.alignment }};
     {% endif %}
   }
 </style>
@@ -37,8 +53,8 @@
           <a href="{{ block.settings.link_url }}" class="btn">
             {{ link_text }}
           </a>
-        {% endif %} 
-      {% else %} 
+        {% endif %}
+      {% else %}
     {% endcase %}
   {% endfor %}
 </div>
@@ -50,18 +66,33 @@
     background-position: center;
   }
 
-  .hero__container {
+  .hero .hero__container {
     padding-top: var(--padding-tp);
     padding-bottom: var(--padding-bt);
     padding-left: var(--padding-left);
     padding-right: var(--padding-right);
+    max-width: var(--container-width);
+    text-align: var(--text-align);
   }
 
-  .hero_heading {
+  .hero .hero_heading {
     font-size:40px;
     font-weight: 700;
+    margin-bottom: var(--title-space-below);
+    color: var(--title-color);
+  }
+
+  .hero .hero__description {
+    margin-bottom: var(--text-space-below);
+    color: var(--text-color);
+  }
+
+  .hero .btn {
+    background-color: var(--btn-bg-color);
+    color: var(--btn-text-color);
   }
 {% endstylesheet %}
+
 {% schema %}
 {
   "name": "Custom Hero",
@@ -72,6 +103,16 @@
   },
 
   "settings": [
+    {
+      "type": "range",
+      "id": "container_width",
+      "label": "containt width",
+      "min": 400,
+      "max": 1440,
+      "unit": "px",
+      "step": 40,
+      "default": 600,
+    },
     {
       "type": "checkbox",
       "id": "is_bg",
@@ -98,12 +139,6 @@
       "visible_if": "{{ section.settings.is_bg }}"
     },
     {
-      "type": "color",
-      "id": "bg_color",
-      "label": "Background Color",
-      "default": "#ffffff"
-    },
-    {
       "type": "range",
       "id": "overlay_opacity",
       "label": "Overlay Opacity",
@@ -112,6 +147,36 @@
       "step": 10,
       "unit": "%",
       "default": 50
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#000"
+    },
+    {
+      "type":"color",
+      "id": "btn_bg_color",
+      "label": "Button Background",
+      "default": "#000"
+    },
+    {
+      "type":"color",
+      "id": "btn_text_color",
+      "label": "Button Text Color",
+      "default": "#000"
     },
     {
       "type": "header",
@@ -157,6 +222,48 @@
       "step": 10,
       "default": 0,
     },
+    {
+      "type": "range",
+      "id": "title_space_below",
+      "label": "Title Space Below",
+      "min": 0,
+      "max": 20,
+      "unit": "px",
+      "step": 2,
+      "default": 10,
+    },
+    {
+      "type": "range",
+      "id": "text_space_below",
+      "label": "Text Space Below",
+      "min": 0,
+      "max": 60,
+      "unit": "px",
+      "step": 4,
+      "default": 12,
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "conent Placement",
+      "options": [
+        {"value": "0 auto", "label": "left"},
+        {"value": "auto", "label": "center"},
+      ],
+      "default": "auto",
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "Text Placement",
+      "options": [
+        {"value": "center", "label": "center"},
+        {"value": "left", "label": "left"},
+        {"value": "right", "label": "right"},
+        {"value": "justify", "label": "justify"},
+      ],
+      "default": "justify",
+    }
   ],
 
   "blocks": [
